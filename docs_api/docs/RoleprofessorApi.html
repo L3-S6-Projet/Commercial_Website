@@ -1,0 +1,911 @@
+<h1 id="roleprofessorapi">RoleprofessorApi</h1>
+<p>All URIs are relative to <em>http://localhost:3030/api</em></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>HTTP request</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="RoleprofessorApi.html#classroomsGet"><strong>classroomsGet</strong></a></td>
+<td><strong>GET</strong> /classrooms</td>
+<td>Returns a paginated list of all classrooms.</td>
+</tr>
+<tr class="even">
+<td><a href="RoleprofessorApi.html#login"><strong>login</strong></a></td>
+<td><strong>POST</strong> /session</td>
+<td>Logins the user to the application, returning a new auth token and the user role.</td>
+</tr>
+<tr class="odd">
+<td><a href="RoleprofessorApi.html#logout"><strong>logout</strong></a></td>
+<td><strong>DELETE</strong> /session</td>
+<td>Destroys the given auth token.</td>
+</tr>
+<tr class="even">
+<td><a href="RoleprofessorApi.html#occupanciesIdDelete"><strong>occupanciesIdDelete</strong></a></td>
+<td><strong>DELETE</strong> /occupancies/{id}</td>
+<td>Removes occupancies from a subject using their IDs.</td>
+</tr>
+<tr class="odd">
+<td><a href="RoleprofessorApi.html#occupanciesIdPut"><strong>occupanciesIdPut</strong></a></td>
+<td><strong>PUT</strong> /occupancies/{id}</td>
+<td>Update an occupancy for a given subject.</td>
+</tr>
+<tr class="even">
+<td><a href="RoleprofessorApi.html#profileFeedsIcalGet"><strong>profileFeedsIcalGet</strong></a></td>
+<td><strong>GET</strong> /profile/feeds/ical</td>
+<td>Gets the url to the ICAL feed of the user calendar.</td>
+</tr>
+<tr class="odd">
+<td><a href="RoleprofessorApi.html#profileLastOccupanciesModificationsGet"><strong>profileLastOccupanciesModificationsGet</strong></a></td>
+<td><strong>GET</strong> /profile/last-occupancies-modifications</td>
+<td>Returns a list of all recent occupancies modifications that are relevant to the user.</td>
+</tr>
+<tr class="even">
+<td><a href="RoleprofessorApi.html#profilePut"><strong>profilePut</strong></a></td>
+<td><strong>PUT</strong> /profile</td>
+<td>Updates the user model.</td>
+</tr>
+<tr class="odd">
+<td><a href="RoleprofessorApi.html#subjectsIdGroupsGroupNumberOccupanciesGet"><strong>subjectsIdGroupsGroupNumberOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /subjects/{id}/groups/{group_number}/occupancies</td>
+<td>Gets the occupancies of a subject for the given time period.</td>
+</tr>
+<tr class="even">
+<td><a href="RoleprofessorApi.html#subjectsIdGroupsGroupNumberOccupanciesPost"><strong>subjectsIdGroupsGroupNumberOccupanciesPost</strong></a></td>
+<td><strong>POST</strong> /subjects/{id}/groups/{group_number}/occupancies</td>
+<td>Creates a new occupancy for a given group of a subject.</td>
+</tr>
+<tr class="odd">
+<td><a href="RoleprofessorApi.html#subjectsIdOccupanciesGet"><strong>subjectsIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /subjects/{id}/occupancies</td>
+<td>Gets the occupancies of a subject for the given time period.</td>
+</tr>
+<tr class="even">
+<td><a href="RoleprofessorApi.html#subjectsIdOccupanciesPost"><strong>subjectsIdOccupanciesPost</strong></a></td>
+<td><strong>POST</strong> /subjects/{id}/occupancies</td>
+<td>Creates a new occupancy for a given subject.</td>
+</tr>
+<tr class="odd">
+<td><a href="RoleprofessorApi.html#teachersIdOccupanciesGet"><strong>teachersIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /teachers/{id}/occupancies</td>
+<td>Gets the occupancies of a teacher for the given time period.</td>
+</tr>
+<tr class="even">
+<td><a href="RoleprofessorApi.html#teachersIdSubjectsGet"><strong>teachersIdSubjectsGet</strong></a></td>
+<td><strong>GET</strong> /teachers/{id}/subjects</td>
+<td>Gets the list of all subjects that a teacher participates in.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="classroomsGet"></a> # <strong>classroomsGet</strong> &gt; ClassroomsList classroomsGet(query, page)</p>
+<p>Returns a paginated list of all classrooms.</p>
+<p>Note : only users with the role `administrator`, or professors, should be able to access this route. 10 classrooms should be returned per page. If less than three characters are provided for the query, it will not be applied.</p>
+<h3 id="example">Example</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb1-12"><a href="#cb1-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="bu">String</span> query = <span class="st">&quot;query_example&quot;</span>; <span class="co">// String | </span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="bu">Integer</span> page = <span class="dv">56</span>; <span class="co">// Integer | </span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="kw">try</span> {</span>
+<span id="cb1-20"><a href="#cb1-20"></a>    ClassroomsList result = apiInstance.<span class="fu">classroomsGet</span>(query, page);</span>
+<span id="cb1-21"><a href="#cb1-21"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb1-22"><a href="#cb1-22"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#classroomsGet&quot;</span>);</span>
+<span id="cb1-24"><a href="#cb1-24"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb1-25"><a href="#cb1-25"></a>}</span></code></pre></div>
+<h3 id="parameters">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>query</strong></td>
+<td><strong>String</strong></td>
+<td></td>
+<td>[optional]</td>
+</tr>
+<tr class="even">
+<td><strong>page</strong></td>
+<td><strong>Integer</strong></td>
+<td></td>
+<td>[optional]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type">Return type</h3>
+<p><a href="ClassroomsList.html"><strong>ClassroomsList</strong></a></p>
+<h3 id="authorization">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="login"></a> # <strong>login</strong> &gt; SuccessfulLoginResponse login(loginRequest)</p>
+<p>Logins the user to the application, returning a new auth token and the user role.</p>
+<h3 id="example-1">Example</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb2-7"><a href="#cb2-7"></a>LoginRequest loginRequest = <span class="kw">new</span> <span class="fu">LoginRequest</span>(); <span class="co">// LoginRequest | </span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="kw">try</span> {</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    SuccessfulLoginResponse result = apiInstance.<span class="fu">login</span>(loginRequest);</span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb2-11"><a href="#cb2-11"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb2-12"><a href="#cb2-12"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#login&quot;</span>);</span>
+<span id="cb2-13"><a href="#cb2-13"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb2-14"><a href="#cb2-14"></a>}</span></code></pre></div>
+<h3 id="parameters-1">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>loginRequest</strong></td>
+<td><a href="LoginRequest.html"><strong>LoginRequest</strong></a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-1">Return type</h3>
+<p><a href="SuccessfulLoginResponse.html"><strong>SuccessfulLoginResponse</strong></a></p>
+<h3 id="authorization-1">Authorization</h3>
+<p>No authorization required</p>
+<h3 id="http-request-headers-1">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: application/json</li>
+<li><strong>Accept</strong>: application/json</li>
+</ul>
+<p><a name="logout"></a> # <strong>logout</strong> &gt; SimpleSuccessResponse logout()</p>
+<p>Destroys the given auth token.</p>
+<h3 id="example-2">Example</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb3-12"><a href="#cb3-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="kw">try</span> {</span>
+<span id="cb3-18"><a href="#cb3-18"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">logout</span>();</span>
+<span id="cb3-19"><a href="#cb3-19"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb3-20"><a href="#cb3-20"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#logout&quot;</span>);</span>
+<span id="cb3-22"><a href="#cb3-22"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb3-23"><a href="#cb3-23"></a>}</span></code></pre></div>
+<h3 id="parameters-2">Parameters</h3>
+<p>This endpoint does not need any parameter.</p>
+<h3 id="return-type-2">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-2">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-2">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: application/json</li>
+<li><strong>Accept</strong>: application/json</li>
+</ul>
+<p><a name="occupanciesIdDelete"></a> # <strong>occupanciesIdDelete</strong> &gt; SimpleSuccessResponse occupanciesIdDelete(id)</p>
+<p>Removes occupancies from a subject using their IDs.</p>
+<p>Note : only administrators and professors who are a teacher of the subject should be able to access this route.</p>
+<h3 id="example-3">Example</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb4-12"><a href="#cb4-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a></span>
+<span id="cb4-16"><a href="#cb4-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Occupancy ID</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="kw">try</span> {</span>
+<span id="cb4-19"><a href="#cb4-19"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">occupanciesIdDelete</span>(id);</span>
+<span id="cb4-20"><a href="#cb4-20"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb4-21"><a href="#cb4-21"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb4-22"><a href="#cb4-22"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#occupanciesIdDelete&quot;</span>);</span>
+<span id="cb4-23"><a href="#cb4-23"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb4-24"><a href="#cb4-24"></a>}</span></code></pre></div>
+<h3 id="parameters-3">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Occupancy ID</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-3">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-3">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-3">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="occupanciesIdPut"></a> # <strong>occupanciesIdPut</strong> &gt; SimpleSuccessResponse occupanciesIdPut(id, occupanciesUpdateRequest)</p>
+<p>Update an occupancy for a given subject.</p>
+<p>Note : only administrators and professors who are a teacher of the subject should be able to access this route. Only classrooms that are free should be accepted. Only classes that are not (any of their groups too) in any classes at the specified time should be accepted. Only filled fields should be updated.You can't change the assigned group, or the assigned type, or the assigned subject, or the assigned teacher.</p>
+<h3 id="example-4">Example</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb5-12"><a href="#cb5-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a></span>
+<span id="cb5-16"><a href="#cb5-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Occupancy ID</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a>OccupanciesUpdateRequest occupanciesUpdateRequest = <span class="kw">new</span> <span class="fu">OccupanciesUpdateRequest</span>(); <span class="co">// OccupanciesUpdateRequest | </span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="kw">try</span> {</span>
+<span id="cb5-20"><a href="#cb5-20"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">occupanciesIdPut</span>(id, occupanciesUpdateRequest);</span>
+<span id="cb5-21"><a href="#cb5-21"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb5-22"><a href="#cb5-22"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb5-23"><a href="#cb5-23"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#occupanciesIdPut&quot;</span>);</span>
+<span id="cb5-24"><a href="#cb5-24"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb5-25"><a href="#cb5-25"></a>}</span></code></pre></div>
+<h3 id="parameters-4">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Occupancy ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>occupanciesUpdateRequest</strong></td>
+<td><a href="OccupanciesUpdateRequest.html"><strong>OccupanciesUpdateRequest</strong></a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-4">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-4">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-4">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="profileFeedsIcalGet"></a> # <strong>profileFeedsIcalGet</strong> &gt; ICALFeed profileFeedsIcalGet()</p>
+<p>Gets the url to the ICAL feed of the user calendar.</p>
+<h3 id="example-5">Example</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb6-12"><a href="#cb6-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a></span>
+<span id="cb6-16"><a href="#cb6-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="kw">try</span> {</span>
+<span id="cb6-18"><a href="#cb6-18"></a>    ICALFeed result = apiInstance.<span class="fu">profileFeedsIcalGet</span>();</span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb6-20"><a href="#cb6-20"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb6-21"><a href="#cb6-21"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#profileFeedsIcalGet&quot;</span>);</span>
+<span id="cb6-22"><a href="#cb6-22"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb6-23"><a href="#cb6-23"></a>}</span></code></pre></div>
+<h3 id="parameters-5">Parameters</h3>
+<p>This endpoint does not need any parameter.</p>
+<h3 id="return-type-5">Return type</h3>
+<p><a href="ICALFeed.html"><strong>ICALFeed</strong></a></p>
+<h3 id="authorization-5">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-5">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="profileLastOccupanciesModificationsGet"></a> # <strong>profileLastOccupanciesModificationsGet</strong> &gt; ProfileRecentModifications profileLastOccupanciesModificationsGet()</p>
+<p>Returns a list of all recent occupancies modifications that are relevant to the user.</p>
+<p>Modifications that are relevant are: - For a teacher: modifications of occupancies about a subject that they teach, or modifications of their own external occupancies. - For a student : modifications of occupancies about a subject that they take. Only the last 25 modifications should be returned.</p>
+<h3 id="example-6">Example</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb7-12"><a href="#cb7-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="kw">try</span> {</span>
+<span id="cb7-18"><a href="#cb7-18"></a>    ProfileRecentModifications result = apiInstance.<span class="fu">profileLastOccupanciesModificationsGet</span>();</span>
+<span id="cb7-19"><a href="#cb7-19"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb7-20"><a href="#cb7-20"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb7-21"><a href="#cb7-21"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#profileLastOccupanciesModificationsGet&quot;</span>);</span>
+<span id="cb7-22"><a href="#cb7-22"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb7-23"><a href="#cb7-23"></a>}</span></code></pre></div>
+<h3 id="parameters-6">Parameters</h3>
+<p>This endpoint does not need any parameter.</p>
+<h3 id="return-type-6">Return type</h3>
+<p><a href="ProfileRecentModifications.html"><strong>ProfileRecentModifications</strong></a></p>
+<h3 id="authorization-6">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-6">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="profilePut"></a> # <strong>profilePut</strong> &gt; SimpleSuccessResponse profilePut(profileUpdateRequest)</p>
+<p>Updates the user model.</p>
+<p>Should be accessible by every user.</p>
+<h3 id="example-7">Example</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb8-12"><a href="#cb8-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a></span>
+<span id="cb8-16"><a href="#cb8-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb8-17"><a href="#cb8-17"></a>ProfileUpdateRequest profileUpdateRequest = <span class="kw">new</span> <span class="fu">ProfileUpdateRequest</span>(); <span class="co">// ProfileUpdateRequest | </span></span>
+<span id="cb8-18"><a href="#cb8-18"></a><span class="kw">try</span> {</span>
+<span id="cb8-19"><a href="#cb8-19"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">profilePut</span>(profileUpdateRequest);</span>
+<span id="cb8-20"><a href="#cb8-20"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb8-21"><a href="#cb8-21"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb8-22"><a href="#cb8-22"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#profilePut&quot;</span>);</span>
+<span id="cb8-23"><a href="#cb8-23"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb8-24"><a href="#cb8-24"></a>}</span></code></pre></div>
+<h3 id="parameters-7">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>profileUpdateRequest</strong></td>
+<td><a href="ProfileUpdateRequest.html"><strong>ProfileUpdateRequest</strong></a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-7">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-7">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-7">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdGroupsGroupNumberOccupanciesGet"></a> # <strong>subjectsIdGroupsGroupNumberOccupanciesGet</strong> &gt; Occupancies subjectsIdGroupsGroupNumberOccupanciesGet(id, groupNumber, start, end, occupanciesPerDay)</p>
+<p>Gets the occupancies of a subject for the given time period.</p>
+<p>Note : only professors who are a teacher of the subject should be able to access this route.</p>
+<h3 id="example-8">Example</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb9-9"><a href="#cb9-9"></a></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb9-12"><a href="#cb9-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a></span>
+<span id="cb9-16"><a href="#cb9-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="bu">Integer</span> groupNumber = <span class="dv">56</span>; <span class="co">// Integer | Group number</span></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="bu">Integer</span> start = <span class="dv">56</span>; <span class="co">// Integer | Start timestamp of the occupancies</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="bu">Integer</span> end = <span class="dv">56</span>; <span class="co">// Integer | End timestamp of the occupancies</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="bu">Integer</span> occupanciesPerDay = <span class="dv">56</span>; <span class="co">// Integer | Pass 0 to return ALL the events.</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="kw">try</span> {</span>
+<span id="cb9-23"><a href="#cb9-23"></a>    Occupancies result = apiInstance.<span class="fu">subjectsIdGroupsGroupNumberOccupanciesGet</span>(id, groupNumber, start, end, occupanciesPerDay);</span>
+<span id="cb9-24"><a href="#cb9-24"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb9-25"><a href="#cb9-25"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb9-26"><a href="#cb9-26"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#subjectsIdGroupsGroupNumberOccupanciesGet&quot;</span>);</span>
+<span id="cb9-27"><a href="#cb9-27"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb9-28"><a href="#cb9-28"></a>}</span></code></pre></div>
+<h3 id="parameters-8">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>groupNumber</strong></td>
+<td><strong>Integer</strong></td>
+<td>Group number</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>start</strong></td>
+<td><strong>Integer</strong></td>
+<td>Start timestamp of the occupancies</td>
+<td>[optional]</td>
+</tr>
+<tr class="even">
+<td><strong>end</strong></td>
+<td><strong>Integer</strong></td>
+<td>End timestamp of the occupancies</td>
+<td>[optional]</td>
+</tr>
+<tr class="odd">
+<td><strong>occupanciesPerDay</strong></td>
+<td><strong>Integer</strong></td>
+<td>Pass 0 to return ALL the events.</td>
+<td>[optional]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-8">Return type</h3>
+<p><a href="Occupancies.html"><strong>Occupancies</strong></a></p>
+<h3 id="authorization-8">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-8">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdGroupsGroupNumberOccupanciesPost"></a> # <strong>subjectsIdGroupsGroupNumberOccupanciesPost</strong> &gt; SimpleSuccessResponse subjectsIdGroupsGroupNumberOccupanciesPost(id, groupNumber, occupanciesCreationRequest)</p>
+<p>Creates a new occupancy for a given group of a subject.</p>
+<p>Note : only professors who are a teacher of the subject should be able to access this route. The only accepted occupancy types should be `td` and `tp`. The classroom id should <strong>NOT</strong> be nullable. Only classrooms that are free should be accepted. Only groups that are not (and their class too) in any classes at the specified time should be accepted.</p>
+<h3 id="example-9">Example</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb10-9"><a href="#cb10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb10-12"><a href="#cb10-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a></span>
+<span id="cb10-16"><a href="#cb10-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="bu">Integer</span> groupNumber = <span class="dv">56</span>; <span class="co">// Integer | Group Number</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a>OccupanciesCreationRequest occupanciesCreationRequest = <span class="kw">new</span> <span class="fu">OccupanciesCreationRequest</span>(); <span class="co">// OccupanciesCreationRequest | </span></span>
+<span id="cb10-20"><a href="#cb10-20"></a><span class="kw">try</span> {</span>
+<span id="cb10-21"><a href="#cb10-21"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">subjectsIdGroupsGroupNumberOccupanciesPost</span>(id, groupNumber, occupanciesCreationRequest);</span>
+<span id="cb10-22"><a href="#cb10-22"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb10-23"><a href="#cb10-23"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb10-24"><a href="#cb10-24"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#subjectsIdGroupsGroupNumberOccupanciesPost&quot;</span>);</span>
+<span id="cb10-25"><a href="#cb10-25"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb10-26"><a href="#cb10-26"></a>}</span></code></pre></div>
+<h3 id="parameters-9">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>groupNumber</strong></td>
+<td><strong>Integer</strong></td>
+<td>Group Number</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>occupanciesCreationRequest</strong></td>
+<td><a href="OccupanciesCreationRequest.html"><strong>OccupanciesCreationRequest</strong></a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-9">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-9">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-9">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdOccupanciesGet"></a> # <strong>subjectsIdOccupanciesGet</strong> &gt; Occupancies subjectsIdOccupanciesGet(id, start, end, occupanciesPerDay)</p>
+<p>Gets the occupancies of a subject for the given time period.</p>
+<p>Note : only users with the role `administrator`, or professors who are a teacher of the subject should be able to access this route.</p>
+<h3 id="example-10">Example</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a></span>
+<span id="cb11-8"><a href="#cb11-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb11-9"><a href="#cb11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb11-12"><a href="#cb11-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a></span>
+<span id="cb11-16"><a href="#cb11-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb11-17"><a href="#cb11-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a><span class="bu">Integer</span> start = <span class="dv">56</span>; <span class="co">// Integer | Start timestamp of the occupancies</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a><span class="bu">Integer</span> end = <span class="dv">56</span>; <span class="co">// Integer | End timestamp of the occupancies</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a><span class="bu">Integer</span> occupanciesPerDay = <span class="dv">56</span>; <span class="co">// Integer | Pass 0 to return ALL the events.</span></span>
+<span id="cb11-21"><a href="#cb11-21"></a><span class="kw">try</span> {</span>
+<span id="cb11-22"><a href="#cb11-22"></a>    Occupancies result = apiInstance.<span class="fu">subjectsIdOccupanciesGet</span>(id, start, end, occupanciesPerDay);</span>
+<span id="cb11-23"><a href="#cb11-23"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb11-24"><a href="#cb11-24"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb11-25"><a href="#cb11-25"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#subjectsIdOccupanciesGet&quot;</span>);</span>
+<span id="cb11-26"><a href="#cb11-26"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb11-27"><a href="#cb11-27"></a>}</span></code></pre></div>
+<h3 id="parameters-10">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>start</strong></td>
+<td><strong>Integer</strong></td>
+<td>Start timestamp of the occupancies</td>
+<td>[optional]</td>
+</tr>
+<tr class="odd">
+<td><strong>end</strong></td>
+<td><strong>Integer</strong></td>
+<td>End timestamp of the occupancies</td>
+<td>[optional]</td>
+</tr>
+<tr class="even">
+<td><strong>occupanciesPerDay</strong></td>
+<td><strong>Integer</strong></td>
+<td>Pass 0 to return ALL the events.</td>
+<td>[optional]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-10">Return type</h3>
+<p><a href="Occupancies.html"><strong>Occupancies</strong></a></p>
+<h3 id="authorization-10">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-10">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdOccupanciesPost"></a> # <strong>subjectsIdOccupanciesPost</strong> &gt; SimpleSuccessResponse subjectsIdOccupanciesPost(id, occupanciesCreationRequest)</p>
+<p>Creates a new occupancy for a given subject.</p>
+<p>Note : only professors who are a teacher of the subject should be able to access this route. The occupancy types `td` and `tp` should be rejected. Only classrooms that are free should be accepted. Only classes that are not (any of their groups too) in any classes at the specified time should be accepted.</p>
+<h3 id="example-11">Example</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a></span>
+<span id="cb12-8"><a href="#cb12-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb12-12"><a href="#cb12-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a></span>
+<span id="cb12-16"><a href="#cb12-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb12-18"><a href="#cb12-18"></a>OccupanciesCreationRequest occupanciesCreationRequest = <span class="kw">new</span> <span class="fu">OccupanciesCreationRequest</span>(); <span class="co">// OccupanciesCreationRequest | </span></span>
+<span id="cb12-19"><a href="#cb12-19"></a><span class="kw">try</span> {</span>
+<span id="cb12-20"><a href="#cb12-20"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">subjectsIdOccupanciesPost</span>(id, occupanciesCreationRequest);</span>
+<span id="cb12-21"><a href="#cb12-21"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb12-22"><a href="#cb12-22"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb12-23"><a href="#cb12-23"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#subjectsIdOccupanciesPost&quot;</span>);</span>
+<span id="cb12-24"><a href="#cb12-24"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb12-25"><a href="#cb12-25"></a>}</span></code></pre></div>
+<h3 id="parameters-11">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>occupanciesCreationRequest</strong></td>
+<td><a href="OccupanciesCreationRequest.html"><strong>OccupanciesCreationRequest</strong></a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-11">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-11">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-11">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="teachersIdOccupanciesGet"></a> # <strong>teachersIdOccupanciesGet</strong> &gt; Occupancies teachersIdOccupanciesGet(id, start, end, occupanciesPerDay)</p>
+<p>Gets the occupancies of a teacher for the given time period.</p>
+<p>Note : only users with the role `administrator`, or teachers whose id match the one in the URL should be able to access this route.</p>
+<h3 id="example-12">Example</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a></span>
+<span id="cb13-8"><a href="#cb13-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb13-9"><a href="#cb13-9"></a></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb13-12"><a href="#cb13-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb13-13"><a href="#cb13-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb13-14"><a href="#cb13-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a></span>
+<span id="cb13-16"><a href="#cb13-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb13-17"><a href="#cb13-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Teacher ID</span></span>
+<span id="cb13-18"><a href="#cb13-18"></a><span class="bu">Integer</span> start = <span class="dv">56</span>; <span class="co">// Integer | Start timestamp of the occupancies</span></span>
+<span id="cb13-19"><a href="#cb13-19"></a><span class="bu">Integer</span> end = <span class="dv">56</span>; <span class="co">// Integer | End timestamp of the occupancies</span></span>
+<span id="cb13-20"><a href="#cb13-20"></a><span class="bu">Integer</span> occupanciesPerDay = <span class="dv">56</span>; <span class="co">// Integer | Pass 0 to return ALL the events.</span></span>
+<span id="cb13-21"><a href="#cb13-21"></a><span class="kw">try</span> {</span>
+<span id="cb13-22"><a href="#cb13-22"></a>    Occupancies result = apiInstance.<span class="fu">teachersIdOccupanciesGet</span>(id, start, end, occupanciesPerDay);</span>
+<span id="cb13-23"><a href="#cb13-23"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb13-24"><a href="#cb13-24"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb13-25"><a href="#cb13-25"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#teachersIdOccupanciesGet&quot;</span>);</span>
+<span id="cb13-26"><a href="#cb13-26"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb13-27"><a href="#cb13-27"></a>}</span></code></pre></div>
+<h3 id="parameters-12">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Teacher ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>start</strong></td>
+<td><strong>Integer</strong></td>
+<td>Start timestamp of the occupancies</td>
+<td>[optional]</td>
+</tr>
+<tr class="odd">
+<td><strong>end</strong></td>
+<td><strong>Integer</strong></td>
+<td>End timestamp of the occupancies</td>
+<td>[optional]</td>
+</tr>
+<tr class="even">
+<td><strong>occupanciesPerDay</strong></td>
+<td><strong>Integer</strong></td>
+<td>Pass 0 to return ALL the events.</td>
+<td>[optional]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-12">Return type</h3>
+<p><a href="Occupancies.html"><strong>Occupancies</strong></a></p>
+<h3 id="authorization-12">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-12">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="teachersIdSubjectsGet"></a> # <strong>teachersIdSubjectsGet</strong> &gt; TeacherSubjects teachersIdSubjectsGet(id)</p>
+<p>Gets the list of all subjects that a teacher participates in.</p>
+<p>Note : only teachers whose id match the one in the URL should be able to access this route.</p>
+<h3 id="example-13">Example</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">//import io.swagger.client.api.RoleprofessorApi;</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb14-9"><a href="#cb14-9"></a></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb14-12"><a href="#cb14-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a></span>
+<span id="cb14-16"><a href="#cb14-16"></a>RoleprofessorApi apiInstance = <span class="kw">new</span> <span class="fu">RoleprofessorApi</span>();</span>
+<span id="cb14-17"><a href="#cb14-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Teacher ID</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a><span class="kw">try</span> {</span>
+<span id="cb14-19"><a href="#cb14-19"></a>    TeacherSubjects result = apiInstance.<span class="fu">teachersIdSubjectsGet</span>(id);</span>
+<span id="cb14-20"><a href="#cb14-20"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb14-21"><a href="#cb14-21"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb14-22"><a href="#cb14-22"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling RoleprofessorApi#teachersIdSubjectsGet&quot;</span>);</span>
+<span id="cb14-23"><a href="#cb14-23"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb14-24"><a href="#cb14-24"></a>}</span></code></pre></div>
+<h3 id="parameters-13">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Teacher ID</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-13">Return type</h3>
+<p><a href="TeacherSubjects.html"><strong>TeacherSubjects</strong></a></p>
+<h3 id="authorization-13">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-13">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<link rel="stylesheet" type="text/css" href="../style.css" />

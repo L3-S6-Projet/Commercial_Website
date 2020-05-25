@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>API Scolendar</title>
+        <meta name="description" content="Documentation de l'API">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        
+
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" sizes="57x57" href="../img/favicon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="../img/favicon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="../img/favicon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="../img/favicon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="../img/favicon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="../img/favicon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="../img/favicon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="../img/favicon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="../img/favicon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="../img/favicon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon/favicon-16x16.png">
+        <link rel="manifest" href="../img/favicon/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="../img/favicon/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+
+        <script src="../js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+
+<body>
+    
+<h1 id="swagger-java-client">swagger-java-client</h1>
+<h2 id="requirements">Requirements</h2>
+<p>Building the API client library requires <a href="https://maven.apache.org/">Maven</a> to be installed.</p>
+<h2 id="installation">Installation</h2>
+<p>To install the API client library to your local Maven repository, simply execute:</p>
+<pre class="shell"><code>mvn install</code></pre>
+<p>To deploy it to a remote Maven repository instead, configure the settings of the repository and execute:</p>
+<pre class="shell"><code>mvn deploy</code></pre>
+<p>Refer to the <a href="https://maven.apache.org/plugins/maven-deploy-plugin/usage.html">official documentation</a> for more information.</p>
+<h3 id="maven-users">Maven users</h3>
+<p>Add this dependency to your project’s POM:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">&lt;dependency&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="kw">&lt;groupId&gt;</span>io.swagger<span class="kw">&lt;/groupId&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="kw">&lt;artifactId&gt;</span>swagger-java-client<span class="kw">&lt;/artifactId&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="kw">&lt;version&gt;</span>1.0.0<span class="kw">&lt;/version&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="kw">&lt;scope&gt;</span>compile<span class="kw">&lt;/scope&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="kw">&lt;/dependency&gt;</span></span></code></pre></div>
+<h3 id="gradle-users">Gradle users</h3>
+<p>Add this dependency to your project’s build file:</p>
+<pre class="groovy"><code>compile &quot;io.swagger:swagger-java-client:1.0.0&quot;</code></pre>
+<h3 id="others">Others</h3>
+<p>At first generate the JAR by executing:</p>
+<pre><code>mvn package</code></pre>
+<p>Then manually install the following JARs:</p>
+<ul>
+<li>target/swagger-java-client-1.0.0.jar</li>
+<li>target/lib/*.jar</li>
+</ul>
+<h2 id="getting-started">Getting Started</h2>
+<p>Please follow the <a href="#installation">installation</a> instruction and execute the following Java code:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">import</span><span class="im"> io.swagger.client.*;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">import</span><span class="im"> io.swagger.client.auth.*;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">import</span><span class="im"> io.swagger.client.model.*;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="kw">import</span><span class="im"> io.swagger.client.api.AuthApi;</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="kw">import</span><span class="im"> java.io.File;</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="kw">import</span><span class="im"> java.util.*;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="kw">public</span> <span class="kw">class</span> AuthApiExample {</span>
+<span id="cb6-11"><a href="#cb6-11"></a></span>
+<span id="cb6-12"><a href="#cb6-12"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {</span>
+<span id="cb6-13"><a href="#cb6-13"></a>        </span>
+<span id="cb6-14"><a href="#cb6-14"></a>        AuthApi apiInstance = <span class="kw">new</span> <span class="fu">AuthApi</span>();</span>
+<span id="cb6-15"><a href="#cb6-15"></a>        LoginRequest loginRequest = <span class="kw">new</span> <span class="fu">LoginRequest</span>(); <span class="co">// LoginRequest | </span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>        <span class="kw">try</span> {</span>
+<span id="cb6-17"><a href="#cb6-17"></a>            SuccessfulLoginResponse result = apiInstance.<span class="fu">login</span>(loginRequest);</span>
+<span id="cb6-18"><a href="#cb6-18"></a>            <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb6-19"><a href="#cb6-19"></a>        } <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb6-20"><a href="#cb6-20"></a>            <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling AuthApi#login&quot;</span>);</span>
+<span id="cb6-21"><a href="#cb6-21"></a>            e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb6-22"><a href="#cb6-22"></a>        }</span>
+<span id="cb6-23"><a href="#cb6-23"></a>    }</span>
+<span id="cb6-24"><a href="#cb6-24"></a>}</span></code></pre></div>
+<h2 id="documentation-for-api-endpoints">Documentation for API Endpoints</h2>
+<p>All URIs are relative to <em>http://localhost:3030/api</em></p>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>Method</th>
+<th>HTTP request</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>AuthApi</em></td>
+<td><a href="docs/AuthApi.html#login"><strong>login</strong></a></td>
+<td><strong>POST</strong> /session</td>
+<td>Logins the user to the application, returning a new auth token and the user role.</td>
+</tr>
+<tr class="even">
+<td><em>AuthApi</em></td>
+<td><a href="docs/AuthApi.html#logout"><strong>logout</strong></a></td>
+<td><strong>DELETE</strong> /session</td>
+<td>Destroys the given auth token.</td>
+</tr>
+<tr class="odd">
+<td><em>ClassesApi</em></td>
+<td><a href="docs/ClassesApi.html#classesDelete"><strong>classesDelete</strong></a></td>
+<td><strong>DELETE</strong> /classes</td>
+<td>Deletes the given classes using their IDs.</td>
+</tr>
+<tr class="even">
+<td><em>ClassesApi</em></td>
+<td><a href="docs/ClassesApi.html#classesGet"><strong>classesGet</strong></a></td>
+<td><strong>GET</strong> /classes</td>
+<td>Returns a paginated list of all classes.</td>
+</tr>
+<tr class="odd">
+<td><em>ClassesApi</em></td>
+<td><a href="docs/ClassesApi.html#classesIdGet"><strong>classesIdGet</strong></a></td>
+<td><strong>GET</strong> /classes/{id}</td>
+<td>Gets information for a class.</td>
+</tr>
+<tr class="even">
+<td><em>ClassesApi</em></td>
+<td><a href="docs/ClassesApi.html#classesIdOccupanciesGet"><strong>classesIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /classes/{id}/occupancies</td>
+<td>Gets the occupancies of a class for the given time period.</td>
+</tr>
+<tr class="odd">
+<td><em>ClassesApi</em></td>
+<td><a href="docs/ClassesApi.html#classesIdPut"><strong>classesIdPut</strong></a></td>
+<td><strong>PUT</strong> /classes/{id}</td>
+<td>Updates information for a class.</td>
+</tr>
+<tr class="even">
+<td><em>ClassesApi</em></td>
+<td><a href="docs/ClassesApi.html#classesPost"><strong>classesPost</strong></a></td>
+<td><strong>POST</strong> /classes</td>
+<td>Creates a new class.</td>
+</tr>
+<tr class="odd">
+<td><em>ClassroomApi</em></td>
+<td><a href="docs/ClassroomApi.html#classroomsDelete"><strong>classroomsDelete</strong></a></td>
+<td><strong>DELETE</strong> /classrooms</td>
+<td>Deletes the given classrooms using their IDs.</td>
+</tr>
+<tr class="even">
+<td><em>ClassroomApi</em></td>
+<td><a href="docs/ClassroomApi.html#classroomsGet"><strong>classroomsGet</strong></a></td>
+<td><strong>GET</strong> /classrooms</td>
+<td>Returns a paginated list of all classrooms.</td>
+</tr>
+<tr class="odd">
+<td><em>ClassroomApi</em></td>
+<td><a href="docs/ClassroomApi.html#classroomsIdGet"><strong>classroomsIdGet</strong></a></td>
+<td><strong>GET</strong> /classrooms/{id}</td>
+<td>Gets information for a classroom.</td>
+</tr>
+<tr class="even">
+<td><em>ClassroomApi</em></td>
+<td><a href="docs/ClassroomApi.html#classroomsIdOccupanciesGet"><strong>classroomsIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /classrooms/{id}/occupancies</td>
+<td>Gets the occupancies of a classroom for the given time period.</td>
+</tr>
+<tr class="odd">
+<td><em>ClassroomApi</em></td>
+<td><a href="docs/ClassroomApi.html#classroomsIdPut"><strong>classroomsIdPut</strong></a></td>
+<td><strong>PUT</strong> /classrooms/{id}</td>
+<td>Updates information for a classroom.</td>
+</tr>
+<tr class="even">
+<td><em>ClassroomApi</em></td>
+<td><a href="docs/ClassroomApi.html#classroomsPost"><strong>classroomsPost</strong></a></td>
+<td><strong>POST</strong> /classrooms</td>
+<td>Creates a new classroom.</td>
+</tr>
+<tr class="odd">
+<td><em>OccupanciesApi</em></td>
+<td><a href="docs/OccupanciesApi.html#occupanciesGet"><strong>occupanciesGet</strong></a></td>
+<td><strong>GET</strong> /occupancies</td>
+<td>Gets all the occupancies for the given time period.</td>
+</tr>
+<tr class="even">
+<td><em>OccupanciesApi</em></td>
+<td><a href="docs/OccupanciesApi.html#occupanciesIdDelete"><strong>occupanciesIdDelete</strong></a></td>
+<td><strong>DELETE</strong> /occupancies/{id}</td>
+<td>Removes occupancies from a subject using their IDs.</td>
+</tr>
+<tr class="odd">
+<td><em>OccupanciesApi</em></td>
+<td><a href="docs/OccupanciesApi.html#occupanciesIdPut"><strong>occupanciesIdPut</strong></a></td>
+<td><strong>PUT</strong> /occupancies/{id}</td>
+<td>Update an occupancy for a given subject.</td>
+</tr>
+<tr class="even">
+<td><em>ProfileApi</em></td>
+<td><a href="docs/ProfileApi.html#profilePut"><strong>profilePut</strong></a></td>
+<td><strong>PUT</strong> /profile</td>
+<td>Updates the user model.</td>
+</tr>
+<tr class="odd">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#classroomsGet"><strong>classroomsGet</strong></a></td>
+<td><strong>GET</strong> /classrooms</td>
+<td>Returns a paginated list of all classrooms.</td>
+</tr>
+<tr class="even">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#login"><strong>login</strong></a></td>
+<td><strong>POST</strong> /session</td>
+<td>Logins the user to the application, returning a new auth token and the user role.</td>
+</tr>
+<tr class="odd">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#logout"><strong>logout</strong></a></td>
+<td><strong>DELETE</strong> /session</td>
+<td>Destroys the given auth token.</td>
+</tr>
+<tr class="even">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#occupanciesIdDelete"><strong>occupanciesIdDelete</strong></a></td>
+<td><strong>DELETE</strong> /occupancies/{id}</td>
+<td>Removes occupancies from a subject using their IDs.</td>
+</tr>
+<tr class="odd">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#occupanciesIdPut"><strong>occupanciesIdPut</strong></a></td>
+<td><strong>PUT</strong> /occupancies/{id}</td>
+<td>Update an occupancy for a given subject.</td>
+</tr>
+<tr class="even">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#profileFeedsIcalGet"><strong>profileFeedsIcalGet</strong></a></td>
+<td><strong>GET</strong> /profile/feeds/ical</td>
+<td>Gets the url to the ICAL feed of the user calendar.</td>
+</tr>
+<tr class="odd">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#profileLastOccupanciesModificationsGet"><strong>profileLastOccupanciesModificationsGet</strong></a></td>
+<td><strong>GET</strong> /profile/last-occupancies-modifications</td>
+<td>Returns a list of all recent occupancies modifications that are relevant to the user.</td>
+</tr>
+<tr class="even">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#profilePut"><strong>profilePut</strong></a></td>
+<td><strong>PUT</strong> /profile</td>
+<td>Updates the user model.</td>
+</tr>
+<tr class="odd">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#subjectsIdGroupsGroupNumberOccupanciesGet"><strong>subjectsIdGroupsGroupNumberOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /subjects/{id}/groups/{group_number}/occupancies</td>
+<td>Gets the occupancies of a subject for the given time period.</td>
+</tr>
+<tr class="even">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#subjectsIdGroupsGroupNumberOccupanciesPost"><strong>subjectsIdGroupsGroupNumberOccupanciesPost</strong></a></td>
+<td><strong>POST</strong> /subjects/{id}/groups/{group_number}/occupancies</td>
+<td>Creates a new occupancy for a given group of a subject.</td>
+</tr>
+<tr class="odd">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#subjectsIdOccupanciesGet"><strong>subjectsIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /subjects/{id}/occupancies</td>
+<td>Gets the occupancies of a subject for the given time period.</td>
+</tr>
+<tr class="even">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#subjectsIdOccupanciesPost"><strong>subjectsIdOccupanciesPost</strong></a></td>
+<td><strong>POST</strong> /subjects/{id}/occupancies</td>
+<td>Creates a new occupancy for a given subject.</td>
+</tr>
+<tr class="odd">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#teachersIdOccupanciesGet"><strong>teachersIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /teachers/{id}/occupancies</td>
+<td>Gets the occupancies of a teacher for the given time period.</td>
+</tr>
+<tr class="even">
+<td><em>RoleprofessorApi</em></td>
+<td><a href="docs/RoleprofessorApi.html#teachersIdSubjectsGet"><strong>teachersIdSubjectsGet</strong></a></td>
+<td><strong>GET</strong> /teachers/{id}/subjects</td>
+<td>Gets the list of all subjects that a teacher participates in.</td>
+</tr>
+<tr class="odd">
+<td><em>RolestudentApi</em></td>
+<td><a href="docs/RolestudentApi.html#login"><strong>login</strong></a></td>
+<td><strong>POST</strong> /session</td>
+<td>Logins the user to the application, returning a new auth token and the user role.</td>
+</tr>
+<tr class="even">
+<td><em>RolestudentApi</em></td>
+<td><a href="docs/RolestudentApi.html#logout"><strong>logout</strong></a></td>
+<td><strong>DELETE</strong> /session</td>
+<td>Destroys the given auth token.</td>
+</tr>
+<tr class="odd">
+<td><em>RolestudentApi</em></td>
+<td><a href="docs/RolestudentApi.html#profileFeedsIcalGet"><strong>profileFeedsIcalGet</strong></a></td>
+<td><strong>GET</strong> /profile/feeds/ical</td>
+<td>Gets the url to the ICAL feed of the user calendar.</td>
+</tr>
+<tr class="even">
+<td><em>RolestudentApi</em></td>
+<td><a href="docs/RolestudentApi.html#profileLastOccupanciesModificationsGet"><strong>profileLastOccupanciesModificationsGet</strong></a></td>
+<td><strong>GET</strong> /profile/last-occupancies-modifications</td>
+<td>Returns a list of all recent occupancies modifications that are relevant to the user.</td>
+</tr>
+<tr class="odd">
+<td><em>RolestudentApi</em></td>
+<td><a href="docs/RolestudentApi.html#profilePut"><strong>profilePut</strong></a></td>
+<td><strong>PUT</strong> /profile</td>
+<td>Updates the user model.</td>
+</tr>
+<tr class="even">
+<td><em>RolestudentApi</em></td>
+<td><a href="docs/RolestudentApi.html#studentsIdOccupanciesGet"><strong>studentsIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /students/{id}/occupancies</td>
+<td>Gets the occupancies of a student for the given time period.</td>
+</tr>
+<tr class="odd">
+<td><em>RolestudentApi</em></td>
+<td><a href="docs/RolestudentApi.html#studentsIdSubjectsGet"><strong>studentsIdSubjectsGet</strong></a></td>
+<td><strong>GET</strong> /students/{id}/subjects</td>
+<td>Gets the list of all subjects that a student participates in.</td>
+</tr>
+<tr class="even">
+<td><em>StudentsApi</em></td>
+<td><a href="docs/StudentsApi.html#studentsDelete"><strong>studentsDelete</strong></a></td>
+<td><strong>DELETE</strong> /students</td>
+<td>Deletes the given students using their IDs.</td>
+</tr>
+<tr class="odd">
+<td><em>StudentsApi</em></td>
+<td><a href="docs/StudentsApi.html#studentsGet"><strong>studentsGet</strong></a></td>
+<td><strong>GET</strong> /students</td>
+<td>Returns a paginated list of all students.</td>
+</tr>
+<tr class="even">
+<td><em>StudentsApi</em></td>
+<td><a href="docs/StudentsApi.html#studentsIdGet"><strong>studentsIdGet</strong></a></td>
+<td><strong>GET</strong> /students/{id}</td>
+<td>Gets information for a student</td>
+</tr>
+<tr class="odd">
+<td><em>StudentsApi</em></td>
+<td><a href="docs/StudentsApi.html#studentsIdOccupanciesGet"><strong>studentsIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /students/{id}/occupancies</td>
+<td>Gets the occupancies of a student for the given time period.</td>
+</tr>
+<tr class="even">
+<td><em>StudentsApi</em></td>
+<td><a href="docs/StudentsApi.html#studentsIdPut"><strong>studentsIdPut</strong></a></td>
+<td><strong>PUT</strong> /students/{id}</td>
+<td>Updates information for a student.</td>
+</tr>
+<tr class="odd">
+<td><em>StudentsApi</em></td>
+<td><a href="docs/StudentsApi.html#studentsIdSubjectsGet"><strong>studentsIdSubjectsGet</strong></a></td>
+<td><strong>GET</strong> /students/{id}/subjects</td>
+<td>Gets the list of all subjects that a student participates in.</td>
+</tr>
+<tr class="even">
+<td><em>StudentsApi</em></td>
+<td><a href="docs/StudentsApi.html#studentsPost"><strong>studentsPost</strong></a></td>
+<td><strong>POST</strong> /students</td>
+<td>Creates a new student.</td>
+</tr>
+<tr class="odd">
+<td><em>SubjectsApi</em></td>
+<td><a href="docs/SubjectsApi.html#subjectsDelete"><strong>subjectsDelete</strong></a></td>
+<td><strong>DELETE</strong> /subjects</td>
+<td>Deletes the given subjects using their IDs.</td>
+</tr>
+<tr class="even">
+<td><em>SubjectsApi</em></td>
+<td><a href="docs/SubjectsApi.html#subjectsGet"><strong>subjectsGet</strong></a></td>
+<td><strong>GET</strong> /subjects</td>
+<td>Returns a paginated list of all subjects.</td>
+</tr>
+<tr class="odd">
+<td><em>SubjectsApi</em></td>
+<td><a href="docs/SubjectsApi.html#subjectsIdGet"><strong>subjectsIdGet</strong></a></td>
+<td><strong>GET</strong> /subjects/{id}</td>
+<td>Gets information on a subject</td>
+</tr>
+<tr class="even">
+<td><em>SubjectsApi</em></td>
+<td><a href="docs/SubjectsApi.html#subjectsIdGroupsDelete"><strong>subjectsIdGroupsDelete</strong></a></td>
+<td><strong>DELETE</strong> /subjects/{id}/groups</td>
+<td>Removes a group from a subject.</td>
+</tr>
+<tr class="odd">
+<td><em>SubjectsApi</em></td>
+<td><a href="docs/SubjectsApi.html#subjectsIdGroupsPost"><strong>subjectsIdGroupsPost</strong></a></td>
+<td><strong>POST</strong> /subjects/{id}/groups</td>
+<td>Adds a new group to a subject.</td>
+</tr>
+<tr class="even">
+<td><em>SubjectsApi</em></td>
+<td><a href="docs/SubjectsApi.html#subjectsIdOccupanciesGet"><strong>subjectsIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /subjects/{id}/occupancies</td>
+<td>Gets the occupancies of a subject for the given time period.</td>
+</tr>
+<tr class="odd">
+<td><em>SubjectsApi</em></td>
+<td><a href="docs/SubjectsApi.html#subjectsIdPut"><strong>subjectsIdPut</strong></a></td>
+<td><strong>PUT</strong> /subjects/{id}</td>
+<td>Updates information for a subject.</td>
+</tr>
+<tr class="even">
+<td><em>SubjectsApi</em></td>
+<td><a href="docs/SubjectsApi.html#subjectsIdTeachersDelete"><strong>subjectsIdTeachersDelete</strong></a></td>
+<td><strong>DELETE</strong> /subjects/{id}/teachers</td>
+<td>Removes teachers from a subject using their IDs.</td>
+</tr>
+<tr class="odd">
+<td><em>SubjectsApi</em></td>
+<td><a href="docs/SubjectsApi.html#subjectsIdTeachersPost"><strong>subjectsIdTeachersPost</strong></a></td>
+<td><strong>POST</strong> /subjects/{id}/teachers</td>
+<td>Adds new teachers to a subject using their IDs.</td>
+</tr>
+<tr class="even">
+<td><em>SubjectsApi</em></td>
+<td><a href="docs/SubjectsApi.html#subjectsPost"><strong>subjectsPost</strong></a></td>
+<td><strong>POST</strong> /subjects</td>
+<td>Creates a new subject.</td>
+</tr>
+<tr class="odd">
+<td><em>TeacherApi</em></td>
+<td><a href="docs/TeacherApi.html#teachersDelete"><strong>teachersDelete</strong></a></td>
+<td><strong>DELETE</strong> /teachers</td>
+<td>Deletes the given teachers using their IDs.</td>
+</tr>
+<tr class="even">
+<td><em>TeacherApi</em></td>
+<td><a href="docs/TeacherApi.html#teachersGet"><strong>teachersGet</strong></a></td>
+<td><strong>GET</strong> /teachers</td>
+<td>Returns a paginated list of all teachers.</td>
+</tr>
+<tr class="odd">
+<td><em>TeacherApi</em></td>
+<td><a href="docs/TeacherApi.html#teachersIdGet"><strong>teachersIdGet</strong></a></td>
+<td><strong>GET</strong> /teachers/{id}</td>
+<td>Gets information for a teacher</td>
+</tr>
+<tr class="even">
+<td><em>TeacherApi</em></td>
+<td><a href="docs/TeacherApi.html#teachersIdOccupanciesGet"><strong>teachersIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /teachers/{id}/occupancies</td>
+<td>Gets the occupancies of a teacher for the given time period.</td>
+</tr>
+<tr class="odd">
+<td><em>TeacherApi</em></td>
+<td><a href="docs/TeacherApi.html#teachersIdPut"><strong>teachersIdPut</strong></a></td>
+<td><strong>PUT</strong> /teachers/{id}</td>
+<td>Updates information for a teacher.</td>
+</tr>
+<tr class="even">
+<td><em>TeacherApi</em></td>
+<td><a href="docs/TeacherApi.html#teachersIdSubjectsGet"><strong>teachersIdSubjectsGet</strong></a></td>
+<td><strong>GET</strong> /teachers/{id}/subjects</td>
+<td>Gets the list of all subjects that a teacher participates in.</td>
+</tr>
+<tr class="odd">
+<td><em>TeacherApi</em></td>
+<td><a href="docs/TeacherApi.html#teachersPost"><strong>teachersPost</strong></a></td>
+<td><strong>POST</strong> /teachers</td>
+<td>Creates a new teacher.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="documentation-for-models">Documentation for Models</h2>
+<ul>
+<li><a href="docs/AccountCreatedResponse.html">AccountCreatedResponse</a></li>
+<li><a href="docs/ClassResponse.html">ClassResponse</a></li>
+<li><a href="docs/ClassUpdateRequest.html">ClassUpdateRequest</a></li>
+<li><a href="docs/ClassWithId.html">ClassWithId</a></li>
+<li><a href="docs/ClassesList.html">ClassesList</a></li>
+<li><a href="docs/Classroom.html">Classroom</a></li>
+<li><a href="docs/ClassroomCreationRequest.html">ClassroomCreationRequest</a></li>
+<li><a href="docs/ClassroomGetResponse.html">ClassroomGetResponse</a></li>
+<li><a href="docs/ClassroomUpdateRequest.html">ClassroomUpdateRequest</a></li>
+<li><a href="docs/ClassroomsList.html">ClassroomsList</a></li>
+<li><a href="docs/ErrorResponse.html">ErrorResponse</a></li>
+<li><a href="docs/ICALFeed.html">ICALFeed</a></li>
+<li><a href="docs/IDRequest.html">IDRequest</a></li>
+<li><a href="docs/Level.html">Level</a></li>
+<li><a href="docs/LoginRequest.html">LoginRequest</a></li>
+<li><a href="docs/ModelClass.html">ModelClass</a></li>
+<li><a href="docs/Occupancies.html">Occupancies</a></li>
+<li><a href="docs/OccupanciesCreationRequest.html">OccupanciesCreationRequest</a></li>
+<li><a href="docs/OccupanciesDays.html">OccupanciesDays</a></li>
+<li><a href="docs/OccupanciesOccupancies.html">OccupanciesOccupancies</a></li>
+<li><a href="docs/OccupanciesUpdateRequest.html">OccupanciesUpdateRequest</a></li>
+<li><a href="docs/OccupancyType.html">OccupancyType</a></li>
+<li><a href="docs/ProfileRecentModifications.html">ProfileRecentModifications</a></li>
+<li><a href="docs/ProfileRecentModificationsModifications.html">ProfileRecentModificationsModifications</a></li>
+<li><a href="docs/ProfileRecentModificationsOccupancy.html">ProfileRecentModificationsOccupancy</a></li>
+<li><a href="docs/ProfileUpdateRequest.html">ProfileUpdateRequest</a></li>
+<li><a href="docs/Rank.html">Rank</a></li>
+<li><a href="docs/Role.html">Role</a></li>
+<li><a href="docs/SimpleSuccessResponse.html">SimpleSuccessResponse</a></li>
+<li><a href="docs/StudentCreationRequest.html">StudentCreationRequest</a></li>
+<li><a href="docs/StudentListResponse.html">StudentListResponse</a></li>
+<li><a href="docs/StudentListResponseStudents.html">StudentListResponseStudents</a></li>
+<li><a href="docs/StudentResponse.html">StudentResponse</a></li>
+<li><a href="docs/StudentResponseStudent.html">StudentResponseStudent</a></li>
+<li><a href="docs/StudentResponseStudentSubjects.html">StudentResponseStudentSubjects</a></li>
+<li><a href="docs/StudentSubjects.html">StudentSubjects</a></li>
+<li><a href="docs/StudentSubjectsGroups.html">StudentSubjectsGroups</a></li>
+<li><a href="docs/StudentSubjectsSubjects.html">StudentSubjectsSubjects</a></li>
+<li><a href="docs/StudentUpdateRequest.html">StudentUpdateRequest</a></li>
+<li><a href="docs/Subject.html">Subject</a></li>
+<li><a href="docs/SubjectListResponse.html">SubjectListResponse</a></li>
+<li><a href="docs/SubjectListResponseSubjects.html">SubjectListResponseSubjects</a></li>
+<li><a href="docs/SubjectResponse.html">SubjectResponse</a></li>
+<li><a href="docs/SubjectResponseSubject.html">SubjectResponseSubject</a></li>
+<li><a href="docs/SubjectResponseSubjectGroups.html">SubjectResponseSubjectGroups</a></li>
+<li><a href="docs/SubjectResponseSubjectTeachers.html">SubjectResponseSubjectTeachers</a></li>
+<li><a href="docs/SubjectUpdateRequest.html">SubjectUpdateRequest</a></li>
+<li><a href="docs/SuccessfulLoginResponse.html">SuccessfulLoginResponse</a></li>
+<li><a href="docs/SuccessfulLoginResponseUser.html">SuccessfulLoginResponseUser</a></li>
+<li><a href="docs/TeacherCreationRequest.html">TeacherCreationRequest</a></li>
+<li><a href="docs/TeacherListResponse.html">TeacherListResponse</a></li>
+<li><a href="docs/TeacherListResponseTeachers.html">TeacherListResponseTeachers</a></li>
+<li><a href="docs/TeacherResponse.html">TeacherResponse</a></li>
+<li><a href="docs/TeacherResponseTeacher.html">TeacherResponseTeacher</a></li>
+<li><a href="docs/TeacherResponseTeacherServices.html">TeacherResponseTeacherServices</a></li>
+<li><a href="docs/TeacherSubjects.html">TeacherSubjects</a></li>
+<li><a href="docs/TeacherSubjectsGroups.html">TeacherSubjectsGroups</a></li>
+<li><a href="docs/TeacherSubjectsSubjects.html">TeacherSubjectsSubjects</a></li>
+<li><a href="docs/TeacherSubjectsTeachers.html">TeacherSubjectsTeachers</a></li>
+<li><a href="docs/TeacherUpdateRequest.html">TeacherUpdateRequest</a></li>
+</ul>
+<h2 id="documentation-for-authorization">Documentation for Authorization</h2>
+<p>Authentication schemes defined for the API: ### token</p>
+<ul>
+<li><strong>Type</strong>: API key</li>
+<li><strong>API key parameter name</strong>: Authorization</li>
+<li><strong>Location</strong>: HTTP header</li>
+</ul>
+<h2 id="recommendation">Recommendation</h2>
+<p>It’s recommended to create an instance of <code>ApiClient</code> per thread in a multithreaded environment to avoid any potential issue.</p>
+<h2 id="author">Author</h2>
+
+
+</body>
+</html>

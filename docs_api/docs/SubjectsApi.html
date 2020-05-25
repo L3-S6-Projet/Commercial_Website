@@ -1,0 +1,678 @@
+<h1 id="subjectsapi">SubjectsApi</h1>
+<p>All URIs are relative to <em>http://localhost:3030/api</em></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>HTTP request</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="SubjectsApi.html#subjectsDelete"><strong>subjectsDelete</strong></a></td>
+<td><strong>DELETE</strong> /subjects</td>
+<td>Deletes the given subjects using their IDs.</td>
+</tr>
+<tr class="even">
+<td><a href="SubjectsApi.html#subjectsGet"><strong>subjectsGet</strong></a></td>
+<td><strong>GET</strong> /subjects</td>
+<td>Returns a paginated list of all subjects.</td>
+</tr>
+<tr class="odd">
+<td><a href="SubjectsApi.html#subjectsIdGet"><strong>subjectsIdGet</strong></a></td>
+<td><strong>GET</strong> /subjects/{id}</td>
+<td>Gets information on a subject</td>
+</tr>
+<tr class="even">
+<td><a href="SubjectsApi.html#subjectsIdGroupsDelete"><strong>subjectsIdGroupsDelete</strong></a></td>
+<td><strong>DELETE</strong> /subjects/{id}/groups</td>
+<td>Removes a group from a subject.</td>
+</tr>
+<tr class="odd">
+<td><a href="SubjectsApi.html#subjectsIdGroupsPost"><strong>subjectsIdGroupsPost</strong></a></td>
+<td><strong>POST</strong> /subjects/{id}/groups</td>
+<td>Adds a new group to a subject.</td>
+</tr>
+<tr class="even">
+<td><a href="SubjectsApi.html#subjectsIdOccupanciesGet"><strong>subjectsIdOccupanciesGet</strong></a></td>
+<td><strong>GET</strong> /subjects/{id}/occupancies</td>
+<td>Gets the occupancies of a subject for the given time period.</td>
+</tr>
+<tr class="odd">
+<td><a href="SubjectsApi.html#subjectsIdPut"><strong>subjectsIdPut</strong></a></td>
+<td><strong>PUT</strong> /subjects/{id}</td>
+<td>Updates information for a subject.</td>
+</tr>
+<tr class="even">
+<td><a href="SubjectsApi.html#subjectsIdTeachersDelete"><strong>subjectsIdTeachersDelete</strong></a></td>
+<td><strong>DELETE</strong> /subjects/{id}/teachers</td>
+<td>Removes teachers from a subject using their IDs.</td>
+</tr>
+<tr class="odd">
+<td><a href="SubjectsApi.html#subjectsIdTeachersPost"><strong>subjectsIdTeachersPost</strong></a></td>
+<td><strong>POST</strong> /subjects/{id}/teachers</td>
+<td>Adds new teachers to a subject using their IDs.</td>
+</tr>
+<tr class="even">
+<td><a href="SubjectsApi.html#subjectsPost"><strong>subjectsPost</strong></a></td>
+<td><strong>POST</strong> /subjects</td>
+<td>Creates a new subject.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="subjectsDelete"></a> # <strong>subjectsDelete</strong> &gt; SimpleSuccessResponse subjectsDelete(iDRequest)</p>
+<p>Deletes the given subjects using their IDs.</p>
+<p>Note : only users with the role `administrator` should be able to access this route. This request should be denied if the subject is used in any occupancy (be it directly, or via a group).</p>
+<h3 id="example">Example</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co">//import io.swagger.client.api.SubjectsApi;</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb1-12"><a href="#cb1-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a>SubjectsApi apiInstance = <span class="kw">new</span> <span class="fu">SubjectsApi</span>();</span>
+<span id="cb1-17"><a href="#cb1-17"></a>IDRequest iDRequest = <span class="kw">new</span> <span class="fu">IDRequest</span>(); <span class="co">// IDRequest | </span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="kw">try</span> {</span>
+<span id="cb1-19"><a href="#cb1-19"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">subjectsDelete</span>(iDRequest);</span>
+<span id="cb1-20"><a href="#cb1-20"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb1-21"><a href="#cb1-21"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb1-22"><a href="#cb1-22"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling SubjectsApi#subjectsDelete&quot;</span>);</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb1-24"><a href="#cb1-24"></a>}</span></code></pre></div>
+<h3 id="parameters">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>iDRequest</strong></td>
+<td><a href="IDRequest.html"><strong>IDRequest</strong></a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsGet"></a> # <strong>subjectsGet</strong> &gt; SubjectListResponse subjectsGet(query, page)</p>
+<p>Returns a paginated list of all subjects.</p>
+<p>Note : only users with the role `administrator` should be able to access this route. 10 subjects should be returned per page. At least three characters should be provided for the search, or the results won't be filtered.</p>
+<h3 id="example-1">Example</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">//import io.swagger.client.api.SubjectsApi;</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb2-12"><a href="#cb2-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a></span>
+<span id="cb2-16"><a href="#cb2-16"></a>SubjectsApi apiInstance = <span class="kw">new</span> <span class="fu">SubjectsApi</span>();</span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="bu">String</span> query = <span class="st">&quot;query_example&quot;</span>; <span class="co">// String | </span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="bu">Integer</span> page = <span class="dv">56</span>; <span class="co">// Integer | </span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="kw">try</span> {</span>
+<span id="cb2-20"><a href="#cb2-20"></a>    SubjectListResponse result = apiInstance.<span class="fu">subjectsGet</span>(query, page);</span>
+<span id="cb2-21"><a href="#cb2-21"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb2-22"><a href="#cb2-22"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb2-23"><a href="#cb2-23"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling SubjectsApi#subjectsGet&quot;</span>);</span>
+<span id="cb2-24"><a href="#cb2-24"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb2-25"><a href="#cb2-25"></a>}</span></code></pre></div>
+<h3 id="parameters-1">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>query</strong></td>
+<td><strong>String</strong></td>
+<td></td>
+<td>[optional]</td>
+</tr>
+<tr class="even">
+<td><strong>page</strong></td>
+<td><strong>Integer</strong></td>
+<td></td>
+<td>[optional]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-1">Return type</h3>
+<p><a href="SubjectListResponse.html"><strong>SubjectListResponse</strong></a></p>
+<h3 id="authorization-1">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-1">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdGet"></a> # <strong>subjectsIdGet</strong> &gt; SubjectResponse subjectsIdGet(id)</p>
+<p>Gets information on a subject</p>
+<p>Note : only users with the role `administrator` should be able to access this route.</p>
+<h3 id="example-2">Example</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">//import io.swagger.client.api.SubjectsApi;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb3-12"><a href="#cb3-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a>SubjectsApi apiInstance = <span class="kw">new</span> <span class="fu">SubjectsApi</span>();</span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="kw">try</span> {</span>
+<span id="cb3-19"><a href="#cb3-19"></a>    SubjectResponse result = apiInstance.<span class="fu">subjectsIdGet</span>(id);</span>
+<span id="cb3-20"><a href="#cb3-20"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb3-21"><a href="#cb3-21"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling SubjectsApi#subjectsIdGet&quot;</span>);</span>
+<span id="cb3-23"><a href="#cb3-23"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb3-24"><a href="#cb3-24"></a>}</span></code></pre></div>
+<h3 id="parameters-2">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-2">Return type</h3>
+<p><a href="SubjectResponse.html"><strong>SubjectResponse</strong></a></p>
+<h3 id="authorization-2">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-2">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdGroupsDelete"></a> # <strong>subjectsIdGroupsDelete</strong> &gt; SimpleSuccessResponse subjectsIdGroupsDelete(id)</p>
+<p>Removes a group from a subject.</p>
+<p>Note : only users with the role `administrator` should be able to access this route. This should trigger the re-organisation of groups. This request should be denied if there is less than one group in the subject.</p>
+<h3 id="example-3">Example</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">//import io.swagger.client.api.SubjectsApi;</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb4-12"><a href="#cb4-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a></span>
+<span id="cb4-16"><a href="#cb4-16"></a>SubjectsApi apiInstance = <span class="kw">new</span> <span class="fu">SubjectsApi</span>();</span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="kw">try</span> {</span>
+<span id="cb4-19"><a href="#cb4-19"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">subjectsIdGroupsDelete</span>(id);</span>
+<span id="cb4-20"><a href="#cb4-20"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb4-21"><a href="#cb4-21"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb4-22"><a href="#cb4-22"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling SubjectsApi#subjectsIdGroupsDelete&quot;</span>);</span>
+<span id="cb4-23"><a href="#cb4-23"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb4-24"><a href="#cb4-24"></a>}</span></code></pre></div>
+<h3 id="parameters-3">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-3">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-3">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-3">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdGroupsPost"></a> # <strong>subjectsIdGroupsPost</strong> &gt; SimpleSuccessResponse subjectsIdGroupsPost(id)</p>
+<p>Adds a new group to a subject.</p>
+<p>Note : only users with the role `administrator` should be able to access this route. This should trigger the re-organization of groups.</p>
+<h3 id="example-4">Example</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">//import io.swagger.client.api.SubjectsApi;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb5-12"><a href="#cb5-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a></span>
+<span id="cb5-16"><a href="#cb5-16"></a>SubjectsApi apiInstance = <span class="kw">new</span> <span class="fu">SubjectsApi</span>();</span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="kw">try</span> {</span>
+<span id="cb5-19"><a href="#cb5-19"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">subjectsIdGroupsPost</span>(id);</span>
+<span id="cb5-20"><a href="#cb5-20"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb5-21"><a href="#cb5-21"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb5-22"><a href="#cb5-22"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling SubjectsApi#subjectsIdGroupsPost&quot;</span>);</span>
+<span id="cb5-23"><a href="#cb5-23"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb5-24"><a href="#cb5-24"></a>}</span></code></pre></div>
+<h3 id="parameters-4">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-4">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-4">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-4">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdOccupanciesGet"></a> # <strong>subjectsIdOccupanciesGet</strong> &gt; Occupancies subjectsIdOccupanciesGet(id, start, end, occupanciesPerDay)</p>
+<p>Gets the occupancies of a subject for the given time period.</p>
+<p>Note : only users with the role `administrator`, or professors who are a teacher of the subject should be able to access this route.</p>
+<h3 id="example-5">Example</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">//import io.swagger.client.api.SubjectsApi;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb6-12"><a href="#cb6-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a></span>
+<span id="cb6-16"><a href="#cb6-16"></a>SubjectsApi apiInstance = <span class="kw">new</span> <span class="fu">SubjectsApi</span>();</span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="bu">Integer</span> start = <span class="dv">56</span>; <span class="co">// Integer | Start timestamp of the occupancies</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="bu">Integer</span> end = <span class="dv">56</span>; <span class="co">// Integer | End timestamp of the occupancies</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="bu">Integer</span> occupanciesPerDay = <span class="dv">56</span>; <span class="co">// Integer | Pass 0 to return ALL the events.</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="kw">try</span> {</span>
+<span id="cb6-22"><a href="#cb6-22"></a>    Occupancies result = apiInstance.<span class="fu">subjectsIdOccupanciesGet</span>(id, start, end, occupanciesPerDay);</span>
+<span id="cb6-23"><a href="#cb6-23"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb6-24"><a href="#cb6-24"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb6-25"><a href="#cb6-25"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling SubjectsApi#subjectsIdOccupanciesGet&quot;</span>);</span>
+<span id="cb6-26"><a href="#cb6-26"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb6-27"><a href="#cb6-27"></a>}</span></code></pre></div>
+<h3 id="parameters-5">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>start</strong></td>
+<td><strong>Integer</strong></td>
+<td>Start timestamp of the occupancies</td>
+<td>[optional]</td>
+</tr>
+<tr class="odd">
+<td><strong>end</strong></td>
+<td><strong>Integer</strong></td>
+<td>End timestamp of the occupancies</td>
+<td>[optional]</td>
+</tr>
+<tr class="even">
+<td><strong>occupanciesPerDay</strong></td>
+<td><strong>Integer</strong></td>
+<td>Pass 0 to return ALL the events.</td>
+<td>[optional]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-5">Return type</h3>
+<p><a href="Occupancies.html"><strong>Occupancies</strong></a></p>
+<h3 id="authorization-5">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-5">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdPut"></a> # <strong>subjectsIdPut</strong> &gt; SimpleSuccessResponse subjectsIdPut(id, subjectUpdateRequest)</p>
+<p>Updates information for a subject.</p>
+<p>Note : only users with the role `administrator` should be able to access this route. The teacher designed by teacher_in_charge_id should already be a teacher of that subject.</p>
+<h3 id="example-6">Example</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">//import io.swagger.client.api.SubjectsApi;</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb7-12"><a href="#cb7-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a>SubjectsApi apiInstance = <span class="kw">new</span> <span class="fu">SubjectsApi</span>();</span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a>SubjectUpdateRequest subjectUpdateRequest = <span class="kw">new</span> <span class="fu">SubjectUpdateRequest</span>(); <span class="co">// SubjectUpdateRequest | </span></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="kw">try</span> {</span>
+<span id="cb7-20"><a href="#cb7-20"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">subjectsIdPut</span>(id, subjectUpdateRequest);</span>
+<span id="cb7-21"><a href="#cb7-21"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb7-22"><a href="#cb7-22"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb7-23"><a href="#cb7-23"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling SubjectsApi#subjectsIdPut&quot;</span>);</span>
+<span id="cb7-24"><a href="#cb7-24"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb7-25"><a href="#cb7-25"></a>}</span></code></pre></div>
+<h3 id="parameters-6">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>subjectUpdateRequest</strong></td>
+<td><a href="SubjectUpdateRequest.html"><strong>SubjectUpdateRequest</strong></a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-6">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-6">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-6">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdTeachersDelete"></a> # <strong>subjectsIdTeachersDelete</strong> &gt; SimpleSuccessResponse subjectsIdTeachersDelete(id, iDRequest)</p>
+<p>Removes teachers from a subject using their IDs.</p>
+<p>Note : only users with the role `administrator` should be able to access this route. This request should be denied if there is less than one teacher in the subject, or if the teacher is in charge.</p>
+<h3 id="example-7">Example</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">//import io.swagger.client.api.SubjectsApi;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb8-12"><a href="#cb8-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a></span>
+<span id="cb8-16"><a href="#cb8-16"></a>SubjectsApi apiInstance = <span class="kw">new</span> <span class="fu">SubjectsApi</span>();</span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>IDRequest iDRequest = <span class="kw">new</span> <span class="fu">IDRequest</span>(); <span class="co">// IDRequest | </span></span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="kw">try</span> {</span>
+<span id="cb8-20"><a href="#cb8-20"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">subjectsIdTeachersDelete</span>(id, iDRequest);</span>
+<span id="cb8-21"><a href="#cb8-21"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb8-22"><a href="#cb8-22"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb8-23"><a href="#cb8-23"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling SubjectsApi#subjectsIdTeachersDelete&quot;</span>);</span>
+<span id="cb8-24"><a href="#cb8-24"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb8-25"><a href="#cb8-25"></a>}</span></code></pre></div>
+<h3 id="parameters-7">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>iDRequest</strong></td>
+<td><a href="IDRequest.html"><strong>IDRequest</strong></a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-7">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-7">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-7">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsIdTeachersPost"></a> # <strong>subjectsIdTeachersPost</strong> &gt; SimpleSuccessResponse subjectsIdTeachersPost(id, iDRequest)</p>
+<p>Adds new teachers to a subject using their IDs.</p>
+<p>Note : only users with the role `administrator` should be able to access this route.</p>
+<h3 id="example-8">Example</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">//import io.swagger.client.api.SubjectsApi;</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb9-9"><a href="#cb9-9"></a></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb9-12"><a href="#cb9-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a></span>
+<span id="cb9-16"><a href="#cb9-16"></a>SubjectsApi apiInstance = <span class="kw">new</span> <span class="fu">SubjectsApi</span>();</span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="bu">Integer</span> id = <span class="dv">56</span>; <span class="co">// Integer | Subject ID</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a>IDRequest iDRequest = <span class="kw">new</span> <span class="fu">IDRequest</span>(); <span class="co">// IDRequest | </span></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="kw">try</span> {</span>
+<span id="cb9-20"><a href="#cb9-20"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">subjectsIdTeachersPost</span>(id, iDRequest);</span>
+<span id="cb9-21"><a href="#cb9-21"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb9-22"><a href="#cb9-22"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb9-23"><a href="#cb9-23"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling SubjectsApi#subjectsIdTeachersPost&quot;</span>);</span>
+<span id="cb9-24"><a href="#cb9-24"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb9-25"><a href="#cb9-25"></a>}</span></code></pre></div>
+<h3 id="parameters-8">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>id</strong></td>
+<td><strong>Integer</strong></td>
+<td>Subject ID</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>iDRequest</strong></td>
+<td><a href="IDRequest.html"><strong>IDRequest</strong></a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-8">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-8">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-8">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<p><a name="subjectsPost"></a> # <strong>subjectsPost</strong> &gt; SimpleSuccessResponse subjectsPost(subjectCreationRequest)</p>
+<p>Creates a new subject.</p>
+<p>Note : only users with the role `administrator` should be able to access this route.</p>
+<h3 id="example-9">Example</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">// Import classes:</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">//import io.swagger.client.ApiClient;</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">//import io.swagger.client.ApiException;</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">//import io.swagger.client.Configuration;</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">//import io.swagger.client.auth.*;</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">//import io.swagger.client.api.SubjectsApi;</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8"></a>ApiClient defaultClient = <span class="bu">Configuration</span>.<span class="fu">getDefaultApiClient</span>();</span>
+<span id="cb10-9"><a href="#cb10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">// Configure API key authorization: token</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>ApiKeyAuth token = (ApiKeyAuth) defaultClient.<span class="fu">getAuthentication</span>(<span class="st">&quot;token&quot;</span>);</span>
+<span id="cb10-12"><a href="#cb10-12"></a>token.<span class="fu">setApiKey</span>(<span class="st">&quot;YOUR API KEY&quot;</span>);</span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co">// Uncomment the following line to set a prefix for the API key, e.g. &quot;Token&quot; (defaults to null)</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co">//token.setApiKeyPrefix(&quot;Token&quot;);</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a></span>
+<span id="cb10-16"><a href="#cb10-16"></a>SubjectsApi apiInstance = <span class="kw">new</span> <span class="fu">SubjectsApi</span>();</span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="bu">Subject</span> subjectCreationRequest = <span class="kw">new</span> <span class="bu">Subject</span>(); <span class="co">// Subject | </span></span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="kw">try</span> {</span>
+<span id="cb10-19"><a href="#cb10-19"></a>    SimpleSuccessResponse result = apiInstance.<span class="fu">subjectsPost</span>(subjectCreationRequest);</span>
+<span id="cb10-20"><a href="#cb10-20"></a>    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(result);</span>
+<span id="cb10-21"><a href="#cb10-21"></a>} <span class="kw">catch</span> (ApiException e) {</span>
+<span id="cb10-22"><a href="#cb10-22"></a>    <span class="bu">System</span>.<span class="fu">err</span>.<span class="fu">println</span>(<span class="st">&quot;Exception when calling SubjectsApi#subjectsPost&quot;</span>);</span>
+<span id="cb10-23"><a href="#cb10-23"></a>    e.<span class="fu">printStackTrace</span>();</span>
+<span id="cb10-24"><a href="#cb10-24"></a>}</span></code></pre></div>
+<h3 id="parameters-9">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>subjectCreationRequest</strong></td>
+<td><a href="Subject.html"><strong>Subject</strong></a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-9">Return type</h3>
+<p><a href="SimpleSuccessResponse.html"><strong>SimpleSuccessResponse</strong></a></p>
+<h3 id="authorization-9">Authorization</h3>
+<p><a href="../README.html#token">token</a></p>
+<h3 id="http-request-headers-9">HTTP request headers</h3>
+<ul>
+<li><strong>Content-Type</strong>: Not defined</li>
+<li><strong>Accept</strong>: Not defined</li>
+</ul>
+<link rel="stylesheet" type="text/css" href="../style.css" />
