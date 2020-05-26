@@ -199,7 +199,6 @@ bootstrap.min.css:5
 	width: 100%;
   	padding-top: 35vh;
   	text-align: center;
-	/*background-image: url(../img/banner_api.jpg);*/
   	vertical-align: middle;
 }
 
@@ -255,8 +254,6 @@ bootstrap.min.css:5
   color: #f7c552;
 }
 
-/*---------------*/
-
 #about {
 	max-width: 90%;
   	height: auto;
@@ -306,7 +303,6 @@ bootstrap.min.css:5
 	font-size: 24px;
 }
 
-
 #docs-api {
 	background-image: url(../img/docs_api.jpg);
 	background-repeat: no-repeat;
@@ -342,6 +338,11 @@ bootstrap.min.css:5
 	font-weight: 350;
 	padding-top: 30px;
 	font-size: 18px;
+}
+
+.text-content h1.color {
+	color: #3f51b5;
+    margin-bottom: 50px;
 }
 
 .wrapper {
