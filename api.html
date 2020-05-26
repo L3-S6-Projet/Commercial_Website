@@ -93,8 +93,21 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="service-item">
                         <h1>Testez l’api</h1>
-                        <div class="line-dec"></div>
-                        <p>TODO (Exemple d'utilisation).</p>
+                        <p>Connecte l'utilisateur à l'application.</p>
+                        <div class="code">
+                            <p>// Import classes:</p>
+                            <p>//import io.swagger.client.ApiException;</p>
+                            <p>//import io.swagger.client.api.AuthApi;</p>
+                            <p>AuthApi apiInstance = new AuthApi();</p>
+                            <p>LoginRequest loginRequest = new LoginRequest(); // LoginRequest</p>
+                            <p>try {</p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SuccessfulLoginResponse result = apiInstance.login(loginRequest);</p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(result);</p>
+                            <p>} catch (ApiException e) {</p>
+                            <p>System.err.println("Exception when calling AuthApi#login");</p>
+                            <p>e.printStackTrace();</p>
+                            <p>}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">

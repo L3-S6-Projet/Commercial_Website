@@ -340,6 +340,19 @@ bootstrap.min.css:5
 	font-size: 18px;
 }
 
+.code {
+    background-color: #eaeaea;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+#docs-api .service-item .code p {
+    font-size: initial;
+    font-weight: 400;
+    padding-top: 1px;
+}
+
 .text-content h1.color {
 	color: #3f51b5;
     margin-bottom: 50px;
